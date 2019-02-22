@@ -1,0 +1,43 @@
+//Переменные
+var cash = 0;//деньги
+var up_money = 50;//цена апгрейда
+var profit_count = 1;//прибавка за кликер
+var Itemcash = 0;
+var Itemupmoney = 0;
+var Itemprofit = 0;
+var profit = document.getElementById('profit');
+var cash_div = document.getElementById('cash');
+var plus = document.getElementById('plus');
+var upgrade = document.getElementById('upgrade');
+//добавляем на 
+window.onload = function () {
+	cash = parseInt(localStorage.getItem("cash"));
+	up_money = parseInt(localStorage.getItem("upmoney"));
+	profit_count = parseInt(localStorage.getItem("profit"));
+	cash_div.innerHTML = "You have: " + cash + "$";
+	upgrade.innerHTML = "Upgrade for " + up_money + "$";
+	profit.innerHTML = "Profit: " + profit_count + "$";
+}
+//Функции 
+plus.onclick = function() {
+	cash+=profit_count;
+	cash_div.innerHTML = "You have: " + cash + "$"; 
+}
+upgrade.onclick = function() {
+	if (cash>=up_money) {
+		cash-=up_money;
+		profit_count*=10; 
+		up_money*=8;
+		cash_div.innerHTML = "You have: " + cash + "$";
+		upgrade.innerHTML = "Upgrade for " + up_money + "$";
+		profit.innerHTML = "Profit: " + profit_count + "$";
+	} else alert("Недостаточно средств");
+}
+var interval = window.setInterval(function refresh() {
+	Itemcash = cash;
+	Itemupmoney = up_money;
+	Itemprofit = profit_count;
+	localStorage.setItem("cash",Itemcash);
+	localStorage.setItem("upmoney",Itemupmoney);
+	localStorage.setItem("profit",Itemprofit);
+},1000);
